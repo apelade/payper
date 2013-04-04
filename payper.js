@@ -50,7 +50,7 @@ See https://github.com/apelade/payper/README.md for details
       if (callback == null) {
         callback = printResults;
       }
-      return ajaxGet("", token, callback);
+      return ajaxGet('', token, callback);
     },
     getApprovedPayments: function(token, callback) {
       if (callback == null) {
@@ -74,7 +74,7 @@ See https://github.com/apelade/payper/README.md for details
       if (callback == null) {
         callback = printResults;
       }
-      return ajaxPost("", JSON.stringify(payment), token, callback);
+      return ajaxPost('', JSON.stringify(payment), token, callback);
     },
     executePayment: function(id, payer, token, callback) {
       if (callback == null) {

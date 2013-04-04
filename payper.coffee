@@ -49,7 +49,7 @@ exports = module.exports =
 ## These would be called from routes in Express server
 
   getAllPayments : ( token, callback = printResults) ->
-    ajaxGet("", token, callback)
+    ajaxGet('', token, callback)
 
   getApprovedPayments : ( token, callback = printResults ) ->
     ajaxGet('?state=approved', token, callback)
@@ -61,7 +61,7 @@ exports = module.exports =
     ajaxGet(id, token, callback)
 
   createPayment : ( payment, token, callback = printResults ) ->
-    ajaxPost("", JSON.stringify(payment), token, callback)
+    ajaxPost('', JSON.stringify(payment), token, callback)
 
   executePayment : ( id, payer, token, callback = printResults ) ->
     ajaxPost( id + '/execute/', JSON.stringify(payer), token, callback)
