@@ -6,7 +6,7 @@
 
 
 ### Featuring [SuperAgent](https://github.com/visionmedia/superagent) for the festival of AJAX.
-- It makes for the _cleanest_ ajax, and works on windows no problem.
+- It makes for the cleanest ajax, and works on windows no problem.
 
 #### There is a jquery version of these examples: __[payjaq](https://github.com/apelade/payjaq)__
 - It's a long install for the deps on windows, but that's where the jquery is at.
