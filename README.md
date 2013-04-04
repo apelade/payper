@@ -38,3 +38,5 @@
 - Since this is an example, uses a single-arg callback.
 - Otherwise, it may be a callback per result state, using a common err handler.
 
+### License:
+MIT 
