@@ -7,7 +7,8 @@
 
 ## Featuring [SuperAgent](https://github.com/visionmedia/superagent) for nice AJAX
 - It's great and works without native code dependencies
-- There is a jquery version of these examples: __[payjaq](https://github.com/apelade/payjaq)__ but the install sucks on windows for now.
+#### There is a jquery version of these examples: __[payjaq](https://github.com/apelade/payjaq)__
+- It's a long install for the deps on windows, but that's where the jquery is at.
 
 ### See the PayPal API at: https://developer.paypal.com/webapps/developer/docs/api
 
@@ -35,4 +36,4 @@
   the paypal payment method.
 - Since this is an example, uses a single-arg callback.
 - Otherwise, it may be a callback per result state, using a common err handler.
-###
+
