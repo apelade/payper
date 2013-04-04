@@ -4,14 +4,13 @@
 
 ## Node Examples for the _PayPal_ REST API with AJAX
 
-
 ### Featuring [SuperAgent](https://github.com/visionmedia/superagent) for this festival of AJAX.
 - It's a powerful ajax cleanser, and works on windows no problem.
 
 ### There is a jquery version of these examples: __[payjaq](https://github.com/apelade/payjaq)__
 - It's a long install for the deps on windows, but that's where the jquery is at.
 
-#### See the [PayPal API](https://developer.paypal.com/webapps/developer/docs/api) 
+### See the [PayPal API](https://developer.paypal.com/webapps/developer/docs/api) 
 
 
 ## Install:
@@ -31,7 +30,7 @@
 - To create live test objects, get a dev client id and secret from PayPal.
 - The static test objects may have outages, like on 4/4/2013 2:15 PM Pacific.
 - The error output was on res.body.payments[0]
-    TypeError cannot read property [0] of undefined
+ - TypeError cannot read property [0] of undefined
 - The tests that try to execute a payment Correctly Fail with PAYMENT_STATE_INVALID 
   when running static PayPal test objects.
 - Note the payment approval step must have been taken by the user for
