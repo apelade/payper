@@ -23,8 +23,8 @@
 
 
 ## Run:
-- `node payper.js` or `coffee payper.coffee`
-- `coffee -c payper.coffee` compiles coffee to javascript
+- `node payper_test.js` or `coffee payper_test.coffee`
+- `coffee -c payper_test.coffee` compiles coffee to javascript
 
 
 ## Notes: 
