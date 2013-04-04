@@ -2,6 +2,7 @@
 # payper
 ======
 
+# ** Update: Unable to hit static test objects 4/4/2013 2:15 Pacific. Looking into it.
 ## Node Examples for the _PayPal_ REST API with AJAX
 
 
