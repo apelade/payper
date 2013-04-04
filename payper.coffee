@@ -1,6 +1,6 @@
 ###
-Node Examples for the Paypal REST API with SuperAgent AJAX
-See https://github.com/apelade/payper/README.md for details
+  Node Examples for the Paypal REST API with SuperAgent AJAX
+  See https://github.com/apelade/payper/README.md for details
 ###
 
 superagent = require 'superagent'
@@ -12,8 +12,9 @@ printResults = (err, res) ->
 
 PAYMENT = 'https://api.sandbox.paypal.com/v1/payments/payment/'
 
-## Three wrapper functions for each main ajax type we need. No beforeSend func!
-
+###
+  Three wrapper functions for each main ajax type we need. No beforeSend func!
+###
 ajaxGet = (extraPath, token, callback) ->
   superagent.agent()
   .get(PAYMENT + extraPath)
@@ -29,7 +30,10 @@ ajaxPost = (path, data, token, callback) ->
   .set('Content-Type', 'application/json')
   .set('Authorization','Bearer ' + token)
   .end(callback)
-
+  
+###
+  These functions could be called from Express server route files, for example
+###
 exports = module.exports =
 
   getToken : ( username, password, callback = printResults ) ->
@@ -45,8 +49,6 @@ exports = module.exports =
     .set('Accept', 'application/json')
     .set('Accept-Language', 'en_US')
     .end(callback)
-
-## These would be called from routes in Express server
 
   getAllPayments : ( token, callback = printResults) ->
     ajaxGet('', token, callback)
