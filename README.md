@@ -5,7 +5,7 @@
 ## Node Examples for the _PayPal_ REST API with AJAX
 
 
-### Featuring [SuperAgent](https://github.com/visionmedia/superagent) for the festival of AJAX.
+### Featuring [SuperAgent](https://github.com/visionmedia/superagent) for this festival of AJAX.
 - It's a powerful ajax cleanser, and works on windows no problem.
 
 #### There is a jquery version of these examples: __[payjaq](https://github.com/apelade/payjaq)__
