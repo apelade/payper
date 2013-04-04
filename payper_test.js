@@ -23,8 +23,8 @@
         console.log(" ");
         console.log(res.body.payments);
         fakeid = res.body.payments[0].id;
-        payper.getPaymentById(fakeid, token, payper.printResults);
-        return console.log(" ");
+        console.log(" ABOUT TO GET PAYMENT BY ID");
+        return payper.getPaymentById(fakeid, token, payper.thisnevergetscalled);
       });
       fakepayment = {
         intent: "sale",
