@@ -29,7 +29,7 @@
 ## Notes:
 - To create live test objects, get a dev client id and secret from PayPal.
 - The static test objects may have outages, like on 4/4/2013 2:15 PM Pacific.
-- The error output was on res.body.payments[0]
+ - The error output was on res.body.payments[0]
  - TypeError cannot read property [0] of undefined
 - The tests that try to execute a payment Correctly Fail with PAYMENT_STATE_INVALID 
   when running static PayPal test objects.
