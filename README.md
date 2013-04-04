@@ -6,7 +6,7 @@
 
 
 ### Featuring [SuperAgent](https://github.com/visionmedia/superagent) for nice AJAX
-- It really cleans your ajax and works without native code dependencies.
+- It really cleans your ajax and works without native code dependencies. AJAX, AJAX.
 
 #### There is a jquery version of these examples: __[payjaq](https://github.com/apelade/payjaq)__
 - It's a long install for the deps on windows, but that's where the jquery is at.
