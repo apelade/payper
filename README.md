@@ -8,10 +8,10 @@
 ### Featuring [SuperAgent](https://github.com/visionmedia/superagent) for this festival of AJAX.
 - It's a powerful ajax cleanser, and works on windows no problem.
 
-#### There is a jquery version of these examples: __[payjaq](https://github.com/apelade/payjaq)__
+### There is a jquery version of these examples: __[payjaq](https://github.com/apelade/payjaq)__
 - It's a long install for the deps on windows, but that's where the jquery is at.
 
-#### See the [PayPal API](https://developer.paypal.com/webapps/developer/docs/api)
+#### See the [PayPal API](https://developer.paypal.com/webapps/developer/docs/api) 
 
 
 ## Install:
