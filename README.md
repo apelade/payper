@@ -7,7 +7,7 @@
 
 ## Featuring [SuperAgent](https://github.com/visionmedia/superagent) for nice AJAX
 - It's great and works without native code dependencies
-- There is a jquery version of these examples: __[payjaq](https://github.com/apelade/payjaq) but the install sucks on windows for now.
+- There is a jquery version of these examples: __[payjaq](https://github.com/apelade/payjaq)__ but the install sucks on windows for now.
 
 ### See the PayPal API at: https://developer.paypal.com/webapps/developer/docs/api
 
