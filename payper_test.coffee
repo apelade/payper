@@ -5,7 +5,7 @@
 payper = require "./payper"
 
 ###
-  Exercise the functions in payjaq
+  Exercise the functions in payper
 ###
 test = () ->
   client_id = 'EOJ2S-Z6OoN_le_KS1d75wsZ6y0SFdVsY9183IvxFyZp'
