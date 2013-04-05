@@ -3,123 +3,119 @@
   Show example usage with static test data
 */
 
+var payper, test;
 
-(function() {
-  var payper, test;
+payper = require("./payper");
 
-  payper = require("./payper");
+/*
+  Exercise the functions in payper
+*/
 
+
+test = function() {
+  var client_id, client_secret;
+
+  client_id = 'EOJ2S-Z6OoN_le_KS1d75wsZ6y0SFdVsY9183IvxFyZp';
+  client_secret = 'EClusMEUk8e9ihI7ZdVLF5cZ6y0SFdVsY9183IvxFyZp';
   /*
-    Exercise the functions in payjaq
+    Get a token that will be used to credential the remaining ops
   */
 
+  return payper.getToken(client_id, client_secret, function(err, res) {
+    var fakepayer, fakepayment, token;
 
-  test = function() {
-    var client_id, client_secret;
-
-    client_id = 'EOJ2S-Z6OoN_le_KS1d75wsZ6y0SFdVsY9183IvxFyZp';
-    client_secret = 'EClusMEUk8e9ihI7ZdVLF5cZ6y0SFdVsY9183IvxFyZp';
+    if (err != null) {
+      console.log(err);
+    }
+    token = res.body.access_token;
+    console.log("Token == ", token, "\n");
     /*
-      Get a token that will be used to credential the remaining ops
+      Get 10 payments
     */
 
-    return payper.getToken(client_id, client_secret, function(err, res) {
-      var fakepayer, fakepayment, token;
+    payper.getPaymentsPaged(token, function(err, res) {
+      var fakeid;
 
-      if (err != null) {
-        console.log(err);
-      }
-      token = res.body.access_token;
-      console.log("Token == ", token, "\n");
+      console.log(" ");
+      console.log(res.body.payments);
+      fakeid = res.body.payments[0].id;
+      console.log(" ABOUT TO GET PAYMENT BY ID");
       /*
-        Get 10 payments
+        Get a payment by id
       */
 
-      payper.getPaymentsPaged(token, function(err, res) {
-        var fakeid;
+      return payper.getPaymentById(fakeid, token, payper.thisnevergetscalled);
+    });
+    /*
+      Get your payments of status approved
+    */
 
-        console.log(" ");
-        console.log(res.body.payments);
-        fakeid = res.body.payments[0].id;
-        console.log(" ABOUT TO GET PAYMENT BY ID");
-        /*
-          Get a payment by id
-        */
+    payper.getApprovedPayments(token, function(err, res) {
+      return console.log(res.body.payments[0]);
+    });
+    /*
+      Make a test object
+    */
 
-        return payper.getPaymentById(fakeid, token, payper.thisnevergetscalled);
-      });
-      /*
-        Get your payments of status approved
-      */
-
-      payper.getApprovedPayments(token, function(err, res) {
-        return console.log(res.body.payments[0]);
-      });
-      /*
-        Make a test object
-      */
-
-      fakepayment = {
-        intent: "sale",
-        payer: {
-          payment_method: "credit_card",
-          funding_instruments: [
-            {
-              credit_card: {
-                number: "4417119669820331",
-                type: "visa",
-                expire_month: 11,
-                expire_year: 2018,
-                cvv2: 874,
-                first_name: "Joe",
-                last_name: "Shopper",
-                billing_address: {
-                  line1: "52 N Main ST",
-                  city: "Johnstown",
-                  country_code: "US",
-                  postal_code: "43210",
-                  state: "OH"
-                }
+    fakepayment = {
+      intent: "sale",
+      payer: {
+        payment_method: "credit_card",
+        funding_instruments: [
+          {
+            credit_card: {
+              number: "4417119669820331",
+              type: "visa",
+              expire_month: 11,
+              expire_year: 2018,
+              cvv2: 874,
+              first_name: "Joe",
+              last_name: "Shopper",
+              billing_address: {
+                line1: "52 N Main ST",
+                city: "Johnstown",
+                country_code: "US",
+                postal_code: "43210",
+                state: "OH"
               }
             }
-          ]
-        },
-        transactions: [
-          {
-            amount: {
-              total: "7.47",
-              currency: "USD",
-              details: {
-                subtotal: "7.41",
-                tax: "0.03",
-                shipping: "0.03"
-              }
-            },
-            description: "This is the FAKE transaction description."
           }
         ]
-      };
-      fakepayer = {
-        payer_id: "7E7MGXCWTTKK2"
-      };
+      },
+      transactions: [
+        {
+          amount: {
+            total: "7.47",
+            currency: "USD",
+            details: {
+              subtotal: "7.41",
+              tax: "0.03",
+              shipping: "0.03"
+            }
+          },
+          description: "This is the FAKE transaction description."
+        }
+      ]
+    };
+    fakepayer = {
+      payer_id: "7E7MGXCWTTKK2"
+    };
+    /*
+      Create a payment with the test object
+    */
+
+    return payper.createPayment(fakepayment, token, function(err, res) {
+      console.log("CREATE PAYMENT result : ", res.body);
+      console.log(" ");
       /*
-        Create a payment with the test object
+        Executing that payment will fail as is
       */
 
-      return payper.createPayment(fakepayment, token, function(err, res) {
-        console.log("CREATE PAYMENT result : ", res.body);
-        console.log(" ");
-        /*
-          Executing that payment will fail as is
-        */
-
-        console.log("EXPECT ERROR: on static test data with message STATE INVALID");
-        payper.executePayment(res.body.id, fakepayer, token);
-        return console.log(" ");
-      });
+      console.log("EXPECT ERROR: on static test data with message STATE INVALID");
+      payper.executePayment(res.body.id, fakepayer, token);
+      return console.log(" ");
     });
-  };
+  });
+};
 
-  test();
-
-}).call(this);
+test();

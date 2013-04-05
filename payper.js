@@ -4,96 +4,92 @@
   See https://github.com/apelade/payper/README.md for details
 */
 
+var PAYMENT, ajaxGet, ajaxPost, exports, printResults, superagent;
 
-(function() {
-  var PAYMENT, ajaxGet, ajaxPost, exports, printResults, superagent;
+superagent = require('superagent');
 
-  superagent = require('superagent');
+printResults = function(err, res) {
+  if (err != null) {
+    console.log(err);
+  }
+  if ((res != null ? res.body : void 0) != null) {
+    console.log(res.body);
+  }
+  return console.log(' ');
+};
 
-  printResults = function(err, res) {
-    if (err != null) {
-      console.log(err);
+PAYMENT = 'https://api.sandbox.paypal.com/v1/payments/payment/';
+
+/*
+  Three wrapper functions for each main ajax type we need. No beforeSend func!
+*/
+
+
+ajaxGet = function(extraPath, token, callback) {
+  return superagent.agent().get(PAYMENT + extraPath).set('Content-Type', 'application/json').set('Authorization', 'Bearer ' + token).end(callback);
+};
+
+ajaxPost = function(path, data, token, callback) {
+  return superagent.agent().post(PAYMENT + path).type('application/x-www-form-urlencoded').send(data).set('Content-Type', 'application/json').set('Authorization', 'Bearer ' + token).end(callback);
+};
+
+/*
+  These functions could be called from Express server route files, for example
+*/
+
+
+exports = module.exports = {
+  getToken: function(username, password, callback) {
+    var basicAuthCred, client_id, client_secret, data, url;
+
+    if (callback == null) {
+      callback = printResults;
     }
-    if ((res != null ? res.body : void 0) != null) {
-      console.log(res.body);
+    client_id = username;
+    client_secret = password;
+    basicAuthCred = client_id + ":" + client_secret + "@";
+    url = "https://" + basicAuthCred + "api.sandbox.paypal.com/v1/oauth2/token";
+    data = {
+      grant_type: 'client_credentials'
+    };
+    return superagent.agent().post(url).type('application/x-www-form-urlencoded').send(data).set('Accept', 'application/json').set('Accept-Language', 'en_US').end(callback);
+  },
+  getAllPayments: function(token, callback) {
+    if (callback == null) {
+      callback = printResults;
     }
-    return console.log(' ');
-  };
-
-  PAYMENT = 'https://api.sandbox.paypal.com/v1/payments/payment/';
-
-  /*
-    Three wrapper functions for each main ajax type we need. No beforeSend func!
-  */
-
-
-  ajaxGet = function(extraPath, token, callback) {
-    return superagent.agent().get(PAYMENT + extraPath).set('Content-Type', 'application/json').set('Authorization', 'Bearer ' + token).end(callback);
-  };
-
-  ajaxPost = function(path, data, token, callback) {
-    return superagent.agent().post(PAYMENT + path).type('application/x-www-form-urlencoded').send(data).set('Content-Type', 'application/json').set('Authorization', 'Bearer ' + token).end(callback);
-  };
-
-  /*
-    These functions could be called from Express server route files, for example
-  */
-
-
-  exports = module.exports = {
-    getToken: function(username, password, callback) {
-      var basicAuthCred, client_id, client_secret, data, url;
-
-      if (callback == null) {
-        callback = printResults;
-      }
-      client_id = username;
-      client_secret = password;
-      basicAuthCred = client_id + ":" + client_secret + "@";
-      url = "https://" + basicAuthCred + "api.sandbox.paypal.com/v1/oauth2/token";
-      data = {
-        grant_type: 'client_credentials'
-      };
-      return superagent.agent().post(url).type('application/x-www-form-urlencoded').send(data).set('Accept', 'application/json').set('Accept-Language', 'en_US').end(callback);
-    },
-    getAllPayments: function(token, callback) {
-      if (callback == null) {
-        callback = printResults;
-      }
-      return ajaxGet('', token, callback);
-    },
-    getApprovedPayments: function(token, callback) {
-      if (callback == null) {
-        callback = printResults;
-      }
-      return ajaxGet('?state=approved', token, callback);
-    },
-    getPaymentsPaged: function(token, callback) {
-      if (callback == null) {
-        callback = printResults;
-      }
-      return ajaxGet('?count=10', token, callback);
-    },
-    getPaymentById: function(id, token, callback) {
-      if (callback == null) {
-        callback = printResults;
-      }
-      return ajaxGet(id, token, callback);
-    },
-    createPayment: function(payment, token, callback) {
-      if (callback == null) {
-        callback = printResults;
-      }
-      return ajaxPost('', JSON.stringify(payment), token, callback);
-    },
-    executePayment: function(id, payer, token, callback) {
-      if (callback == null) {
-        callback = printResults;
-      }
-      return ajaxPost(id + '/execute/', JSON.stringify(payer), token, callback);
+    return ajaxGet('', token, callback);
+  },
+  getApprovedPayments: function(token, callback) {
+    if (callback == null) {
+      callback = printResults;
     }
-  };
+    return ajaxGet('?state=approved', token, callback);
+  },
+  getPaymentsPaged: function(token, callback) {
+    if (callback == null) {
+      callback = printResults;
+    }
+    return ajaxGet('?count=10', token, callback);
+  },
+  getPaymentById: function(id, token, callback) {
+    if (callback == null) {
+      callback = printResults;
+    }
+    return ajaxGet(id, token, callback);
+  },
+  createPayment: function(payment, token, callback) {
+    if (callback == null) {
+      callback = printResults;
+    }
+    return ajaxPost('', JSON.stringify(payment), token, callback);
+  },
+  executePayment: function(id, payer, token, callback) {
+    if (callback == null) {
+      callback = printResults;
+    }
+    return ajaxPost(id + '/execute/', JSON.stringify(payer), token, callback);
+  }
+};
 
-  return module.exports;
-
-}).call(this);
+return module.exports;
