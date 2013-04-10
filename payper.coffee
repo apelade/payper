@@ -33,6 +33,8 @@ ajaxPost = (path, data, token, callback) ->
   
 ###
   These functions could be called from Express server route files, for example
+  Params username and password are paypal sandbox credentials.
+  Get your own for interaction with live paypal objects.
 ###
 exports = module.exports =
 
