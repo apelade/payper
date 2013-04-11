@@ -8,7 +8,7 @@
 - It's a powerful ajax cleanser, and works on windows no problem.
 
 ### There is a jquery version of these examples: __[payjaq](https://github.com/apelade/payjaq)__
-- It's a long install for the deps on windows, but that's where the jquery is at.
+- It's a longer install for the deps on windows, but that's where the jquery is at.
 
 ### See the [PayPal API](https://developer.paypal.com/webapps/developer/docs/api) 
 
@@ -36,7 +36,7 @@
 - Note the payment approval step must have been taken by the user for
   completePayment to succeed.
 - Don't forget to redirect to approval_url listed in response links if using
-  the paypal payment method.
+  the paypal payment method. See github/apelade/sto for a [simple example.](https://github.com/apelade/sto/blob/master/route/index.coffee)
 - Since this is an example, uses a single-arg callback.
 - Otherwise, it may be a callback per result state, using a common err handler.
 
