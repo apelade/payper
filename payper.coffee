@@ -8,9 +8,11 @@ superagent = require 'superagent'
 printResults = (err, res) ->
   console.log err if err?
   console.log res.body if res?.body?
-  console.log  ' '
 
 PAYMENT = 'https://api.sandbox.paypal.com/v1/payments/payment/'
+SALE = 'https://api.paypal.com/v1/payments/sale/'
+REFUND = 'https://api.paypal.com/v1/refund/'
+CREDIT_CARD ='https://api.paypal.com/v1/vault/credit-card/'
 
 ###
   Three wrapper functions for each main ajax type we need. No beforeSend func!
@@ -69,5 +71,34 @@ exports = module.exports =
 
   executePayment : ( id, payer, token, callback = printResults ) ->
     ajaxPost( id + '/execute/', JSON.stringify(payer), token, callback)
+    
+  ############# UNTESTED #######################  
+    
+  getSaleById : ( id, token, callback = printResults ) ->
+    ajaxGet( SALE + id, token, callback )
+  
+  refundSale : ( id, token, callback = printResults ) ->
+    empty_payload = {}  
+    ajaxPost( SALE + id + '/refund', empty_payload, token, callback )
+    
+  getRefundById : ( id, token, callback = printResults ) ->
+    ajaxGet( REFUND + id, token, callback )
+  
+  # cvv2, names, and address are optional, supply defaults?
+  storeCreditCard : ( type, num, exp_mo, exp_yr, cvv2, first_name, last_name, billing_addr, token, callback = printResults ) ->
+    card =
+      type: type
+      number: num
+      expire_month: exp_mo
+      expire_year: exp_yr
+      cvv2:cvv2
+      first_name: first_name
+      last_name: last_name
+      billing_addr: billing_addr
+      
+    ajaxPost( CREDIT_CARD, JSON.stringify(card), token, callback )
+
+  getCreditCardById : ( id, token, callback = printResults ) ->
+    ajax.get( CREDIT_CARD + id, token, callback )    
 
 return module.exports

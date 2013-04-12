@@ -4,7 +4,7 @@
   See https://github.com/apelade/payper/README.md for details
 */
 
-var PAYMENT, ajaxGet, ajaxPost, exports, printResults, superagent;
+var CREDIT_CARD, PAYMENT, REFUND, SALE, ajaxGet, ajaxPost, exports, printResults, superagent;
 
 superagent = require('superagent');
 
@@ -13,12 +13,17 @@ printResults = function(err, res) {
     console.log(err);
   }
   if ((res != null ? res.body : void 0) != null) {
-    console.log(res.body);
+    return console.log(res.body);
   }
-  return console.log(' ');
 };
 
 PAYMENT = 'https://api.sandbox.paypal.com/v1/payments/payment/';
+
+SALE = 'https://api.paypal.com/v1/payments/sale/';
+
+REFUND = 'https://api.paypal.com/v1/refund/';
+
+CREDIT_CARD = 'https://api.paypal.com/v1/vault/credit-card/';
 
 /*
   Three wrapper functions for each main ajax type we need. No beforeSend func!
@@ -35,6 +40,8 @@ ajaxPost = function(path, data, token, callback) {
 
 /*
   These functions could be called from Express server route files, for example
+  Params username and password are paypal sandbox credentials.
+  Get your own for interaction with live paypal objects.
 */
 
 
@@ -89,6 +96,51 @@ exports = module.exports = {
       callback = printResults;
     }
     return ajaxPost(id + '/execute/', JSON.stringify(payer), token, callback);
+  },
+  getSaleById: function(id, token, callback) {
+    if (callback == null) {
+      callback = printResults;
+    }
+    return ajaxGet(SALE + id, token, callback);
+  },
+  refundSale: function(id, token, callback) {
+    var empty_payload;
+
+    if (callback == null) {
+      callback = printResults;
+    }
+    empty_payload = {};
+    return ajaxPost(SALE + id + '/refund', empty_payload, token, callback);
+  },
+  getRefundById: function(id, token, callback) {
+    if (callback == null) {
+      callback = printResults;
+    }
+    return ajaxGet(REFUND + id, token, callback);
+  },
+  storeCreditCard: function(type, num, exp_mo, exp_yr, cvv2, first_name, last_name, billing_addr, token, callback) {
+    var card;
+
+    if (callback == null) {
+      callback = printResults;
+    }
+    card = {
+      type: type,
+      number: num,
+      expire_month: exp_mo,
+      expire_year: exp_yr,
+      cvv2: cvv2,
+      first_name: first_name,
+      last_name: last_name,
+      billing_addr: billing_addr
+    };
+    return ajaxPost(CREDIT_CARD, JSON.stringify(card), token, callback);
+  },
+  getCreditCardById: function(id, token, callback) {
+    if (callback == null) {
+      callback = printResults;
+    }
+    return ajax.get(CREDIT_CARD + id, token, callback);
   }
 };
 
