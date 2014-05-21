@@ -99,6 +99,7 @@ exports = module.exports =
     ajaxPost( CREDIT_CARD, JSON.stringify(card), token, callback )
 
   getCreditCardById : ( id, token, callback = printResults ) ->
-    ajax.get( CREDIT_CARD + id, token, callback )    
+    # ajax.get( CREDIT_CARD + id, token, callback )    
+    ajaxGet( CREDIT_CARD + id, token, callback )    
 
 return module.exports
